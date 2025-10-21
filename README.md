@@ -1,90 +1,321 @@
-# A Touch of Elegance - Dry Cleaning Website
+# A Touch of Elegance - Professional Web Application
 
-A simple, professional static website for A Touch of Elegance dry cleaning services.
+A fully functional web application for A Touch of Elegance dry cleaning services built with Node.js, Express, and modern web technologies.
 
 ## Features
 
-- Clean, professional design
-- Fully responsive (mobile-friendly)
-- Easy to customize
-- Fast loading
-- No dependencies required
+- **Production-Ready Architecture**: Structured application with separation of concerns
+- **RESTful API**: Complete API endpoints for services and contact management
+- **Security**: Helmet.js for security headers, CORS support, input validation
+- **Performance**: Compression middleware, optimized static file serving
+- **Logging**: Comprehensive logging with different levels and file outputs
+- **Health Checks**: Built-in health check endpoint for monitoring
+- **Docker Support**: Containerized deployment with health checks
+- **Kubernetes Ready**: Complete K8s manifests for GKE deployment
+- **Error Handling**: Centralized error handling with graceful degradation
+- **Graceful Shutdown**: Proper cleanup on application shutdown
 
-## Deployment Options
+## Project Structure
 
-This website can be easily hosted on various platforms:
+```
+touch-of-elegance-site/
+├── src/
+│   ├── config/           # Configuration files
+│   │   └── index.js      # Main configuration
+│   ├── controllers/      # Request handlers
+│   │   ├── servicesController.js
+│   │   └── contactController.js
+│   ├── middleware/       # Custom middleware
+│   │   └── errorHandler.js
+│   ├── routes/           # API routes
+│   │   └── index.js
+│   ├── utils/            # Utility functions
+│   │   └── logger.js     # Logging utility
+│   ├── index.js          # Application entry point
+│   └── server.js         # Express server setup
+├── public/               # Static files
+│   ├── css/              # Stylesheets
+│   ├── js/               # Client-side JavaScript
+│   ├── images/           # Images and media
+│   └── index.html        # Main HTML file
+├── logs/                 # Application logs (gitignored)
+├── deployment.yml        # Kubernetes deployment
+├── service.yml           # Kubernetes service
+├── kustomization.yml     # Kustomize configuration
+├── Dockerfile            # Docker configuration
+├── .dockerignore         # Docker ignore rules
+├── .env.example          # Environment variables template
+├── .eslintrc.js          # ESLint configuration
+├── .gitignore            # Git ignore rules
+├── package.json          # Node.js dependencies and scripts
+└── README.md             # This file
+```
 
-### GitHub Pages (Free)
+## Prerequisites
 
-1. Go to your repository Settings
-2. Navigate to "Pages" section
-3. Under "Source", select your branch (e.g., `main`)
-4. Click Save
-5. Your site will be available at `https://yourusername.github.io/touch-of-elegance-site/`
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+- Docker (optional, for containerization)
+- kubectl (optional, for Kubernetes deployment)
 
-### Netlify (Free)
+## Installation
 
-1. Sign up at [netlify.com](https://www.netlify.com/)
-2. Click "New site from Git"
-3. Connect your GitHub repository
-4. Deploy settings:
-   - Build command: (leave empty)
-   - Publish directory: `/`
-5. Click "Deploy site"
-
-### Vercel (Free)
-
-1. Sign up at [vercel.com](https://vercel.com/)
-2. Click "New Project"
-3. Import your GitHub repository
-4. Click "Deploy"
-
-### Traditional Web Hosting
-
-Simply upload the files (`index.html` and `styles.css`) to your web server's public directory (often `public_html` or `www`).
-
-## Local Testing
-
-To view the website locally:
-
-1. Clone this repository
-2. Open `index.html` in your web browser
-3. Or use a simple HTTP server:
+1. Clone the repository:
    ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Python 2
-   python -m SimpleHTTPServer 8000
-   
-   # Node.js (requires npx)
-   npx http-server
+   git clone https://github.com/dan-tome/touch-of-elegance-site.git
+   cd touch-of-elegance-site
    ```
-4. Visit `http://localhost:8000` in your browser
 
-## Customization
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-To customize the website for your business:
+3. Create environment file:
+   ```bash
+   cp .env.example .env
+   ```
 
-1. Edit `index.html` to update:
-   - Business name and tagline
-   - Services offered
-   - Contact information (address, phone, email, hours)
-   - About us section
+4. Configure environment variables in `.env`:
+   ```
+   NODE_ENV=development
+   PORT=3000
+   HOST=0.0.0.0
+   LOG_LEVEL=info
+   ```
 
-2. Edit `styles.css` to change:
-   - Colors (search for color codes like `#2c3e50`)
-   - Fonts
-   - Layout and spacing
+## Running the Application
 
-## Browser Support
+### Development Mode
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers
+Start the development server with hot reload:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`
+
+### Production Mode
+
+Start the production server:
+
+```bash
+npm start
+```
+
+## API Endpoints
+
+### Health Check
+- `GET /health` - Returns application health status
+
+### API Information
+- `GET /api` - Returns API information and available endpoints
+
+### Services
+- `GET /api/services` - Get all services
+- `GET /api/services/:id` - Get a specific service by ID
+
+### Contact
+- `POST /api/contact` - Submit a contact form
+  - Body: `{ name, email, phone, message }`
+
+### Static Site
+- `GET /` - Serves the main website
+
+## Development
+
+### Code Linting
+
+Run ESLint to check code quality:
+
+```bash
+npm run lint
+```
+
+### Testing
+
+Run tests (when available):
+
+```bash
+npm test
+```
+
+## Docker Deployment
+
+### Build Docker Image
+
+```bash
+docker build -t touch-of-elegance:latest .
+```
+
+### Run Docker Container
+
+```bash
+docker run -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  touch-of-elegance:latest
+```
+
+### Docker Compose (Optional)
+
+Create a `docker-compose.yml` file:
+
+```yaml
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+```
+
+Run with:
+```bash
+docker-compose up -d
+```
+
+## Kubernetes Deployment (GKE)
+
+The application includes Kubernetes manifests for Google Kubernetes Engine (GKE) deployment.
+
+### Prerequisites
+
+1. Configure GKE cluster credentials
+2. Update environment variables in `.github/workflows/google.yml`
+
+### Deploy to Kubernetes
+
+```bash
+# Apply the configurations
+kubectl apply -k .
+
+# Check deployment status
+kubectl get deployments
+kubectl get services
+kubectl get pods
+
+# View logs
+kubectl logs -f deployment/touch-of-elegance
+```
+
+### CI/CD Pipeline
+
+The GitHub workflow (`.github/workflows/google.yml`) automatically:
+1. Builds a Docker image
+2. Pushes to Google Artifact Registry
+3. Deploys to GKE cluster
+
+Configure the following secrets in GitHub:
+- `WORKLOAD_IDENTITY_PROVIDER`
+- Update project-specific variables in the workflow file
+
+## Configuration
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODE_ENV` | Environment (development/production) | development |
+| `PORT` | Server port | 3000 |
+| `HOST` | Server host | 0.0.0.0 |
+| `CORS_ORIGIN` | Allowed CORS origins | * |
+| `LOG_LEVEL` | Logging level (error/warn/info/debug) | info |
+| `LOG_DIR` | Directory for log files | logs |
+
+## Security Features
+
+- **Helmet.js**: Sets various HTTP headers for security
+- **CORS**: Configurable Cross-Origin Resource Sharing
+- **Input Validation**: Request body validation
+- **Error Handling**: Sanitized error messages in production
+- **Rate Limiting**: Ready for rate limiting implementation
+- **Non-root Docker User**: Container runs as non-privileged user
+
+## Logging
+
+The application uses a custom logger with:
+- Console output with color coding (development)
+- File-based logging (production)
+- Different log levels (error, warn, info, debug)
+- Automatic log rotation support
+
+Logs are stored in the `logs/` directory:
+- `error.log` - Error level logs
+- `warn.log` - Warning level logs
+- `info.log` - Info level logs
+- `debug.log` - Debug level logs
+
+## Performance Optimization
+
+- Compression middleware for response compression
+- Static file caching
+- Efficient routing
+- Health check endpoint for load balancers
+- Graceful shutdown handling
+
+## Monitoring and Health Checks
+
+### Health Check Endpoint
+
+```bash
+curl http://localhost:3000/health
+```
+
+Response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "uptime": 123.456
+}
+```
+
+### Docker Health Check
+
+The Dockerfile includes a built-in health check that runs every 30 seconds.
+
+## Troubleshooting
+
+### Port Already in Use
+
+If port 3000 is already in use, change the PORT in your `.env` file:
+```
+PORT=8080
+```
+
+### Permission Errors
+
+Ensure the `logs/` directory is writable:
+```bash
+chmod -R 755 logs/
+```
+
+### Docker Build Fails
+
+Clear Docker cache and rebuild:
+```bash
+docker system prune -a
+docker build --no-cache -t touch-of-elegance:latest .
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run linting and tests
+5. Submit a pull request
 
 ## License
 
 This project is available for use by A Touch of Elegance.
+
+## Support
+
+For issues or questions, please contact the development team.
