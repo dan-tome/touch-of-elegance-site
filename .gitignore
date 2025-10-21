@@ -30,6 +30,7 @@ Thumbs.db
 
 # Testing
 coverage/
+.jest-cache/
 
 # Temporary files
 tmp/
