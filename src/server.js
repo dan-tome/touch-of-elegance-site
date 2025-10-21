@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const config = require('./config');
 const logger = require('./utils/logger');
 const errorHandler = require('./middleware/errorHandler');
+const { apiLimiter } = require('./middleware/rateLimiter');
 const routes = require('./routes');
 
 const app = express();
@@ -42,6 +43,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Static files
 app.use(express.static(path.join(__dirname, '../public')));
+
+// Rate limiting for API routes
+app.use('/api', apiLimiter);
 
 // API routes
 app.use('/api', routes);
