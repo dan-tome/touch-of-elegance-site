@@ -120,6 +120,18 @@ Start the production server:
 npm start
 ```
 
+### Hosting in Production
+
+Ready to deploy? Check out our hosting guides:
+
+- **[Quick Start Guide](./QUICKSTART.md)** - Get online in 5-10 minutes with Railway, Render, or Cloud Run
+- **[Complete Hosting Guide](./HOSTING.md)** - Comprehensive guide covering 15+ hosting platforms including:
+  - Platform-as-a-Service (Vercel, Railway, Render, Heroku)
+  - Container hosting (Google Cloud Run, AWS ECS, Azure)
+  - Kubernetes (GKE, EKS, AKS)
+  - Traditional VPS hosting
+  - DNS, SSL, and monitoring setup
+
 ## API Endpoints
 
 ### Health Check
