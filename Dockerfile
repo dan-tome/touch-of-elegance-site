@@ -4,11 +4,10 @@ FROM node:20-alpine
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
+# Install dependencies
 RUN npm ci --only=production
 
 # Bundle app source
