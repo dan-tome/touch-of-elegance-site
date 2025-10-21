@@ -135,11 +135,33 @@ npm run lint
 
 ### Testing
 
-Run tests (when available):
+The application includes a comprehensive test suite with 117 tests achieving >90% code coverage.
+
+Run all tests with coverage:
 
 ```bash
 npm test
 ```
+
+Run tests in watch mode for development:
+
+```bash
+npm run test:watch
+```
+
+Run tests for CI/CD:
+
+```bash
+npm run test:ci
+```
+
+View detailed test documentation in `tests/README.md`.
+
+**Test Coverage:**
+- Statements: 96.72%
+- Branches: 90.69%
+- Functions: 94.73%
+- Lines: 96.69%
 
 ## Docker Deployment
 

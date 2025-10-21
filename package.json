@@ -7,7 +7,9 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint src/**/*.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
   },
   "keywords": [
     "dry-cleaning",
@@ -32,6 +34,27 @@
   },
   "devDependencies": {
     "eslint": "^9.14.0",
-    "nodemon": "^3.1.7"
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.7",
+    "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   }
 }
