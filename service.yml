@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: touch-of-elegance-service
+  labels:
+    app: touch-of-elegance
+spec:
+  type: LoadBalancer
+  selector:
+    app: touch-of-elegance
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
