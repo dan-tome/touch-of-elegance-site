@@ -4,9 +4,10 @@ const config = require('./config');
 const logger = require('./utils/logger');
 
 const PORT = config.port;
+const HOST = config.host;
 
-const server = app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  logger.info(`Server is running on ${HOST}:${PORT}`);
   logger.info(`Environment: ${config.env}`);
   logger.info(`Visit http://localhost:${PORT}`);
 });
