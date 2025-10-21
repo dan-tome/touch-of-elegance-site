@@ -4,6 +4,7 @@ A fully functional web application for A Touch of Elegance dry cleaning services
 
 ## Features
 
+### Backend
 - **Production-Ready Architecture**: Structured application with separation of concerns
 - **RESTful API**: Complete API endpoints for services and contact management
 - **Security**: Helmet.js for security headers, CORS support, input validation
@@ -14,6 +15,21 @@ A fully functional web application for A Touch of Elegance dry cleaning services
 - **Kubernetes Ready**: Complete K8s manifests for GKE deployment
 - **Error Handling**: Centralized error handling with graceful degradation
 - **Graceful Shutdown**: Proper cleanup on application shutdown
+
+### Frontend
+- **Dynamic Content Loading**: Services loaded dynamically from API
+- **Interactive Contact Form**: Full-featured contact form with validation
+- **User Feedback**: Toast notifications for success/error messages
+- **Smooth Scrolling**: Enhanced navigation with smooth scrolling
+- **Input Validation**: Client-side validation for better UX
+- **Responsive Design**: Mobile-first responsive layout
+- **XSS Protection**: HTML escaping for dynamic content
+
+### Testing
+- **Comprehensive Test Suite**: 31 tests with 81.96% code coverage
+- **Unit Tests**: Controller and business logic tests
+- **Integration Tests**: End-to-end API testing
+- **Jest Framework**: Modern testing with coverage reports
 
 ## Project Structure
 
@@ -135,7 +151,7 @@ npm run lint
 
 ### Testing
 
-The application includes a comprehensive test suite with 117 tests achieving >90% code coverage.
+The application includes a comprehensive test suite with 117+ tests achieving >90% code coverage.
 
 Run all tests with coverage:
 
@@ -156,6 +172,11 @@ npm run test:ci
 ```
 
 View detailed test documentation in `tests/README.md`.
+
+The test suite includes:
+- Unit tests for all controllers (services, contact, customers)
+- Integration tests for API endpoints
+- Code coverage reports (stored in `coverage/` directory)
 
 **Test Coverage:**
 - Statements: 96.72%

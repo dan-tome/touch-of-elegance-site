@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Touch of Elegance - Customer Management">
+    <title>Customer Management - A Touch of Elegance</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/customers.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>A Touch of Elegance</h1>
+            <p class="tagline">Premium Dry Cleaning & Laundry Services</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#services">Services</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="/customers.html">Customers</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="customers-section">
+            <div class="container">
+                <h2>Customer Management</h2>
+                
+                <!-- Add Customer Form -->
+                <div class="add-customer-form">
+                    <h3>Add New Customer</h3>
+                    <form id="customerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input 
+                                    type="text" 
+                                    id="firstName" 
+                                    name="firstName" 
+                                    required 
+                                    placeholder="Enter first name"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input 
+                                    type="text" 
+                                    id="lastName" 
+                                    name="lastName" 
+                                    required 
+                                    placeholder="Enter last name"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number *</label>
+                            <input 
+                                type="tel" 
+                                id="phoneNumber" 
+                                name="phoneNumber" 
+                                required 
+                                placeholder="Enter phone number"
+                            >
+                        </div>
+                        <button type="submit" class="btn-primary">Add Customer</button>
+                    </form>
+                </div>
+
+                <!-- Customers List -->
+                <div class="customers-list">
+                    <h3>All Customers</h3>
+                    <div id="customersContainer" class="customers-grid">
+                        <div class="loading">Loading customers...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 A Touch of Elegance. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
