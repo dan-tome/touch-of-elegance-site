@@ -1,48 +1,64 @@
 const servicesController = require('../../src/controllers/servicesController');
+const logger = require('../../src/utils/logger');
+
+jest.mock('../../src/utils/logger');
 
 describe('Services Controller', () => {
-  let req, res;
+  let mockReq;
+  let mockRes;
 
   beforeEach(() => {
-    req = {
+    mockReq = {
       params: {},
     };
-    res = {
-      json: jest.fn().mockReturnThis(),
+    mockRes = {
       status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
     };
+    logger.info = jest.fn();
+    logger.error = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('getAll', () => {
-    it('should return all services with success status', () => {
-      servicesController.getAll(req, res);
+    test('should return all services successfully', () => {
+      servicesController.getAll(mockReq, mockRes);
 
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
-        data: expect.arrayContaining([
-          expect.objectContaining({
-            id: expect.any(Number),
-            name: expect.any(String),
-            description: expect.any(String),
-            category: expect.any(String),
-          }),
-        ]),
+        data: expect.any(Array),
       });
+      expect(logger.info).toHaveBeenCalledWith('Fetching all services');
     });
 
-    it('should return 6 services', () => {
-      servicesController.getAll(req, res);
+    test('should return array of 6 services', () => {
+      servicesController.getAll(mockReq, mockRes);
 
-      const callArgs = res.json.mock.calls[0][0];
-      expect(callArgs.data).toHaveLength(6);
+      const response = mockRes.json.mock.calls[0][0];
+      expect(response.data).toHaveLength(6);
     });
 
-    it('should include expected service names', () => {
-      servicesController.getAll(req, res);
+    test('should return services with correct properties', () => {
+      servicesController.getAll(mockReq, mockRes);
 
-      const callArgs = res.json.mock.calls[0][0];
-      const serviceNames = callArgs.data.map(s => s.name);
+      const response = mockRes.json.mock.calls[0][0];
+      const service = response.data[0];
+      
+      expect(service).toHaveProperty('id');
+      expect(service).toHaveProperty('name');
+      expect(service).toHaveProperty('description');
+      expect(service).toHaveProperty('category');
+    });
 
+    test('should include specific services', () => {
+      servicesController.getAll(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      const serviceNames = response.data.map(s => s.name);
+      
       expect(serviceNames).toContain('Dry Cleaning');
       expect(serviceNames).toContain('Laundry Service');
       expect(serviceNames).toContain('Alterations');
@@ -53,46 +69,141 @@ describe('Services Controller', () => {
   });
 
   describe('getById', () => {
-    it('should return a specific service when valid id is provided', () => {
-      req.params.id = '1';
+    test('should return service by valid id', () => {
+      mockReq.params.id = '1';
 
-      servicesController.getById(req, res);
+      servicesController.getById(mockReq, mockRes);
 
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         data: expect.objectContaining({
           id: 1,
           name: 'Dry Cleaning',
-          description: expect.any(String),
-          category: 'cleaning',
         }),
       });
+      expect(logger.info).toHaveBeenCalledWith('Fetching service with id: 1');
     });
 
-    it('should return 404 when service is not found', () => {
-      req.params.id = '999';
+    test('should return 404 for non-existent service', () => {
+      mockReq.params.id = '999';
 
-      servicesController.getById(req, res);
+      servicesController.getById(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         error: 'Service not found',
       });
     });
 
-    it('should handle string ids correctly', () => {
-      req.params.id = '3';
+    test('should handle different valid service ids', () => {
+      const testIds = [1, 2, 3, 4, 5, 6];
 
-      servicesController.getById(req, res);
-
-      expect(res.json).toHaveBeenCalledWith({
-        success: true,
-        data: expect.objectContaining({
-          id: 3,
-          name: 'Alterations',
-        }),
+      testIds.forEach(id => {
+        mockReq.params.id = String(id);
+        servicesController.getById(mockReq, mockRes);
+        
+        const response = mockRes.json.mock.calls[mockRes.json.mock.calls.length - 1][0];
+        expect(response.success).toBe(true);
+        expect(response.data.id).toBe(id);
       });
+    });
+
+    test('should parse string id to integer', () => {
+      mockReq.params.id = '3';
+
+      servicesController.getById(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      expect(response.data.id).toBe(3);
+    });
+
+    test('should handle invalid id format', () => {
+      mockReq.params.id = 'invalid';
+
+      servicesController.getById(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(404);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Service not found',
+      });
+    });
+
+    test('should return service with all required properties', () => {
+      mockReq.params.id = '1';
+
+      servicesController.getById(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      expect(response.data).toHaveProperty('id');
+      expect(response.data).toHaveProperty('name');
+      expect(response.data).toHaveProperty('description');
+      expect(response.data).toHaveProperty('category');
+    });
+  });
+
+  describe('Service categories', () => {
+    test('should include cleaning category services', () => {
+      servicesController.getAll(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      const cleaningServices = response.data.filter(s => s.category === 'cleaning');
+      
+      expect(cleaningServices.length).toBeGreaterThan(0);
+    });
+
+    test('should include tailoring category services', () => {
+      servicesController.getAll(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      const tailoringServices = response.data.filter(s => s.category === 'tailoring');
+      
+      expect(tailoringServices.length).toBeGreaterThan(0);
+    });
+
+    test('should include specialty category services', () => {
+      servicesController.getAll(mockReq, mockRes);
+
+      const response = mockRes.json.mock.calls[0][0];
+      const specialtyServices = response.data.filter(s => s.category === 'specialty');
+      
+      expect(specialtyServices.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Error handling in getAll', () => {
+    test('should catch and handle errors in getAll', () => {
+      // Mock logger.info to throw, simulating an error during the request
+      const originalInfo = logger.info;
+      logger.info.mockImplementation(() => {
+        throw new Error('Unexpected error');
+      });
+
+      servicesController.getAll(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(logger.error).toHaveBeenCalled();
+      
+      // Restore original
+      logger.info = originalInfo;
+    });
+  });
+
+  describe('Error handling in getById', () => {
+    test('should handle errors in getById', () => {
+      // Force an error by making find throw
+      mockReq.params.id = '1';
+      
+      // Mock logger.info to throw an error
+      logger.info.mockImplementation(() => {
+        throw new Error('Logger error');
+      });
+
+      servicesController.getById(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(logger.error).toHaveBeenCalled();
     });
   });
 });

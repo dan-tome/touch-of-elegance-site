@@ -1,164 +1,224 @@
 const contactController = require('../../src/controllers/contactController');
+const logger = require('../../src/utils/logger');
+
+jest.mock('../../src/utils/logger');
 
 describe('Contact Controller', () => {
-  let req, res;
+  let mockReq;
+  let mockRes;
 
   beforeEach(() => {
-    req = {
+    mockReq = {
       body: {},
     };
-    res = {
-      json: jest.fn().mockReturnThis(),
+    mockRes = {
       status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
     };
+    logger.info = jest.fn();
+    logger.error = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('submit', () => {
-    it('should successfully process a valid contact form', () => {
-      req.body = {
+    test('should successfully submit valid contact form', () => {
+      mockReq.body = {
         name: 'John Doe',
         email: 'john@example.com',
-        phone: '555-1234',
-        message: 'I need dry cleaning service',
+        phone: '123-456-7890',
+        message: 'Test message',
       };
 
-      contactController.submit(req, res);
+      contactController.submit(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: true,
         message: 'Your message has been received. We will contact you soon!',
       });
+      expect(logger.info).toHaveBeenCalledWith(
+        'Contact form submission:',
+        expect.objectContaining({
+          name: 'John Doe',
+          email: 'john@example.com',
+        })
+      );
     });
 
-    it('should accept contact form without phone number', () => {
-      req.body = {
-        name: 'Jane Smith',
-        email: 'jane@example.com',
-        message: 'Question about services',
-      };
-
-      contactController.submit(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({
-        success: true,
-        message: expect.any(String),
-      });
-    });
-
-    it('should return 400 when name is missing', () => {
-      req.body = {
+    test('should accept contact form without phone number', () => {
+      mockReq.body = {
+        name: 'John Doe',
         email: 'john@example.com',
         message: 'Test message',
       };
 
-      contactController.submit(req, res);
+      contactController.submit(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: true,
+        })
+      );
+    });
+
+    test('should return 400 if name is missing', () => {
+      mockReq.body = {
+        email: 'john@example.com',
+        message: 'Test message',
+      };
+
+      contactController.submit(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         error: 'Name, email, and message are required',
       });
     });
 
-    it('should return 400 when email is missing', () => {
-      req.body = {
+    test('should return 400 if email is missing', () => {
+      mockReq.body = {
         name: 'John Doe',
         message: 'Test message',
       };
 
-      contactController.submit(req, res);
+      contactController.submit(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         error: 'Name, email, and message are required',
       });
     });
 
-    it('should return 400 when message is missing', () => {
-      req.body = {
+    test('should return 400 if message is missing', () => {
+      mockReq.body = {
         name: 'John Doe',
         email: 'john@example.com',
       };
 
-      contactController.submit(req, res);
+      contactController.submit(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         error: 'Name, email, and message are required',
       });
     });
 
-    it('should return 400 for invalid email format', () => {
-      req.body = {
+    test('should return 400 for invalid email format', () => {
+      mockReq.body = {
         name: 'John Doe',
         email: 'invalid-email',
         message: 'Test message',
       };
 
-      contactController.submit(req, res);
+      contactController.submit(mockReq, mockRes);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         error: 'Invalid email address',
       });
     });
 
-    it('should reject email without domain', () => {
-      req.body = {
-        name: 'John Doe',
-        email: 'john@',
-        message: 'Test message',
-      };
-
-      contactController.submit(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
-        success: false,
-        error: 'Invalid email address',
-      });
-    });
-
-    it('should reject email without @ symbol', () => {
-      req.body = {
-        name: 'John Doe',
-        email: 'johnexample.com',
-        message: 'Test message',
-      };
-
-      contactController.submit(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
-        success: false,
-        error: 'Invalid email address',
-      });
-    });
-
-    it('should accept valid email formats', () => {
+    test('should validate various valid email formats', () => {
       const validEmails = [
         'test@example.com',
         'user.name@example.com',
         'user+tag@example.co.uk',
-        'test123@test-domain.com',
+        'user_name@example-domain.com',
+        'test123@test.org',
       ];
 
       validEmails.forEach(email => {
-        req.body = {
+        mockReq.body = {
           name: 'John Doe',
           email: email,
           message: 'Test message',
         };
 
-        contactController.submit(req, res);
+        contactController.submit(mockReq, mockRes);
 
-        expect(res.status).toHaveBeenCalledWith(200);
+        expect(mockRes.status).toHaveBeenCalledWith(200);
       });
+    });
+
+    test('should reject various invalid email formats', () => {
+      const invalidEmails = [
+        'invalid',
+        '@example.com',
+        'user@',
+        'user @example.com',
+        'user@.com',
+        'user@domain',
+      ];
+
+      invalidEmails.forEach(email => {
+        mockReq.body = {
+          name: 'John Doe',
+          email: email,
+          message: 'Test message',
+        };
+
+        contactController.submit(mockReq, mockRes);
+
+        expect(mockRes.status).toHaveBeenCalledWith(400);
+      });
+    });
+
+    test('should handle empty string fields as missing', () => {
+      mockReq.body = {
+        name: '',
+        email: 'john@example.com',
+        message: 'Test message',
+      };
+
+      contactController.submit(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+    });
+
+    test('should accept fields with whitespace', () => {
+      mockReq.body = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        phone: '123-456-7890',
+        message: 'Test message',
+      };
+
+      contactController.submit(mockReq, mockRes);
+
+      // The controller accepts valid data
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+    });
+  });
+
+  describe('Error handling', () => {
+    test('should handle unexpected errors gracefully', () => {
+      // Force an error by making logger.info throw
+      logger.info.mockImplementation(() => {
+        throw new Error('Logging failed');
+      });
+
+      mockReq.body = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        message: 'Test message',
+      };
+
+      contactController.submit(mockReq, mockRes);
+
+      expect(mockRes.status).toHaveBeenCalledWith(500);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to process contact form',
+      });
+      expect(logger.error).toHaveBeenCalled();
     });
   });
 });

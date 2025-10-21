@@ -8,7 +8,8 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint src/**/*.js",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
   },
   "keywords": [
     "dry-cleaning",
@@ -46,6 +47,14 @@
     ],
     "testMatch": [
       "**/tests/**/*.test.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   }
 }
