@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+  <rect width="400" height="300" fill="#f8f8f8"/>
+  <!-- Leather jacket -->
+  <g transform="translate(200, 80)">
+    <!-- Body -->
+    <path d="M -60 0 L -80 50 L -70 50 L -70 140 L -50 150 L 50 150 L 70 140 L 70 50 L 80 50 L 60 0 Z" 
+          fill="#1a1a1a" stroke="#000000" stroke-width="2"/>
+    <!-- Collar -->
+    <path d="M -30 0 L -45 15 L -35 25 L -15 15 L -10 0" 
+          fill="#1a1a1a" stroke="#000000" stroke-width="2"/>
+    <path d="M 30 0 L 45 15 L 35 25 L 15 15 L 10 0" 
+          fill="#1a1a1a" stroke="#000000" stroke-width="2"/>
+    <!-- Zipper -->
+    <line x1="0" y1="20" x2="0" y2="140" stroke="#666666" stroke-width="2"/>
+    <circle cx="0" cy="25" r="4" fill="#666666"/>
+    <circle cx="0" cy="45" r="3" fill="#666666"/>
+    <circle cx="0" cy="65" r="3" fill="#666666"/>
+    <circle cx="0" cy="85" r="3" fill="#666666"/>
+    <circle cx="0" cy="105" r="3" fill="#666666"/>
+    <circle cx="0" cy="125" r="3" fill="#666666"/>
+    <!-- Pockets -->
+    <rect x="-55" y="60" width="30" height="25" fill="none" stroke="#000000" stroke-width="1.5"/>
+    <rect x="25" y="60" width="30" height="25" fill="none" stroke="#000000" stroke-width="1.5"/>
+    <!-- Seam details -->
+    <line x1="-60" y1="20" x2="-60" y2="140" stroke="#000000" stroke-width="1" opacity="0.5"/>
+    <line x1="60" y1="20" x2="60" y2="140" stroke="#000000" stroke-width="1" opacity="0.5"/>
+  </g>
+  <!-- Shine effect -->
+  <g opacity="0.2">
+    <ellipse cx="150" cy="120" rx="15" ry="30" fill="#ffffff"/>
+    <ellipse cx="250" cy="140" rx="12" ry="25" fill="#ffffff"/>
+  </g>
+</svg>

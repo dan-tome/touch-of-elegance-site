@@ -8,8 +8,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
+    color: #1a1a1a;
+    background-color: #ffffff;
 }
 
 .container {
@@ -20,28 +20,33 @@ body {
 
 /* Header Styles */
 header {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: #000000;
     color: white;
-    padding: 2rem 0;
+    padding: 3rem 0;
     text-align: center;
+    border-bottom: 1px solid #333333;
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 0.5rem;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
+    font-weight: 300;
+    text-transform: uppercase;
 }
 
 .tagline {
     font-size: 1.1rem;
     font-style: italic;
-    opacity: 0.9;
+    opacity: 0.8;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 
 /* Navigation Styles */
 nav {
-    background-color: #34495e;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -63,11 +68,14 @@ nav ul li a {
     color: white;
     text-decoration: none;
     padding: 1rem 1.5rem;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 
 nav ul li a:hover {
-    background-color: #2c3e50;
+    background-color: #000000;
+    color: #ffffff;
 }
 
 /* Main Content Styles */
@@ -80,39 +88,45 @@ section {
 }
 
 section h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: #2c3e50;
+    color: #000000;
     text-align: center;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23ecf0f1" width="1200" height="600"/></svg>');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('/images/hero-background.svg');
     background-size: cover;
     background-position: center;
     color: white;
     text-align: center;
-    padding: 4rem 0;
+    padding: 6rem 0;
 }
 
 .hero h2 {
     color: white;
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
+    font-weight: 300;
+    letter-spacing: 4px;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.8;
+    font-weight: 300;
 }
 
 /* Services Section */
 .services {
-    background-color: white;
+    background-color: #f5f5f5;
 }
 
 .service-grid {
@@ -123,32 +137,49 @@ section h2 {
 }
 
 .service-card {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+    text-align: center;
 }
 
 .service-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.service-card img {
+    width: 100%;
+    max-width: 200px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    display: block;
+    object-fit: contain;
 }
 
 .service-card h3 {
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .service-card p {
-    color: #555;
-    line-height: 1.6;
+    color: #4a4a4a;
+    line-height: 1.7;
+    font-weight: 300;
 }
 
 /* About Section */
 .about {
-    background-color: #ecf0f1;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .about p {
@@ -156,7 +187,9 @@ section h2 {
     margin: 0 auto 1.5rem;
     text-align: center;
     font-size: 1.1rem;
-    line-height: 1.8;
+    line-height: 1.9;
+    color: #4a4a4a;
+    font-weight: 300;
 }
 
 .features {
@@ -167,21 +200,24 @@ section h2 {
 }
 
 .feature {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
+    background-color: #f5f5f5;
+    padding: 2rem 1.5rem;
+    border-radius: 0;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
 }
 
 .feature h4 {
-    color: #27ae60;
+    color: #000000;
     font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
 }
 
 /* Contact Section */
 .contact {
-    background-color: white;
+    background-color: #f5f5f5;
 }
 
 .contact-content {
@@ -200,33 +236,42 @@ section h2 {
 .contact-item {
     text-align: center;
     padding: 1.5rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: 0;
+    border: 1px solid #e0e0e0;
 }
 
 .contact-item h3 {
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .contact-item p {
-    color: #555;
+    color: #4a4a4a;
     line-height: 1.8;
+    font-weight: 300;
 }
 
 /* Contact Form */
 .contact-form-container {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
 }
 
 .contact-form-container h3 {
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .contact-form .form-group {
@@ -236,29 +281,32 @@ section h2 {
 .contact-form label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #2c3e50;
-    font-weight: 500;
+    color: #000000;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 .contact-form .required {
-    color: #e74c3c;
+    color: #000000;
 }
 
 .contact-form input,
 .contact-form textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0;
     font-size: 1rem;
     font-family: inherit;
     transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: #2c3e50;
+    border-color: #000000;
+    background-color: #ffffff;
 }
 
 .contact-form textarea {
@@ -267,24 +315,27 @@ section h2 {
 }
 
 .btn-submit {
-    background-color: #2c3e50;
+    background-color: #000000;
     color: white;
-    padding: 0.875rem 2rem;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     width: 100%;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .btn-submit:hover {
-    background-color: #34495e;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .btn-submit:disabled {
-    background-color: #95a5a6;
+    background-color: #cccccc;
     cursor: not-allowed;
 }
 
@@ -305,12 +356,13 @@ section h2 {
 .service-category {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background-color: #2c3e50;
+    background-color: #000000;
     color: white;
-    border-radius: 20px;
+    border-radius: 0;
     font-size: 0.85rem;
     margin-top: 0.5rem;
     text-transform: capitalize;
+    letter-spacing: 1px;
 }
 
 /* Notification Styles */
@@ -319,8 +371,8 @@ section h2 {
     top: 20px;
     right: 20px;
     padding: 1rem 1.5rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     z-index: 1000;
     max-width: 400px;
     font-size: 1rem;
@@ -335,27 +387,72 @@ section h2 {
 }
 
 .notification-success {
-    background-color: #27ae60;
+    background-color: #000000;
     color: white;
+    border-left: 4px solid #ffffff;
 }
 
 .notification-error {
-    background-color: #e74c3c;
+    background-color: #1a1a1a;
     color: white;
+    border-left: 4px solid #666666;
 }
 
 .notification-info {
-    background-color: #3498db;
+    background-color: #2a2a2a;
     color: white;
+    border-left: 4px solid #ffffff;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #2c3e50;
+    background-color: #000000;
     color: white;
     text-align: center;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     margin-top: 2rem;
+    border-top: 1px solid #333333;
+}
+
+footer p {
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* Video Section */
+.video-section {
+    background-color: #000000;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.video-section h2 {
+    color: #ffffff;
+    margin-bottom: 2rem;
+}
+
+.video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.video-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-placeholder {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.video-placeholder:hover {
+    transform: scale(1.02);
 }
 
 /* Responsive Design */
@@ -430,15 +527,19 @@ footer {
 .add-customer-form {
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 3rem;
+    border: 1px solid #e0e0e0;
 }
 
 .add-customer-form h3 {
-    color: #003d5c;
+    color: #000000;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .form-row {
@@ -454,57 +555,67 @@ footer {
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #333;
-    font-weight: 500;
+    color: #000000;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 .form-group input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    border-radius: 0;
     font-size: 1rem;
     font-family: inherit;
     transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #004d73;
+    border-color: #000000;
+    background-color: #ffffff;
 }
 
 .btn-primary {
-    background-color: #004d73;
+    background-color: #000000;
     color: white;
     padding: 0.875rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 400;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .btn-primary:hover {
-    background-color: #003d5c;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .btn-primary:disabled {
-    background-color: #ccc;
+    background-color: #cccccc;
     cursor: not-allowed;
 }
 
 .customers-list {
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
 }
 
 .customers-list h3 {
-    color: #003d5c;
+    color: #000000;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .customers-grid {
@@ -516,24 +627,26 @@ footer {
 .customer-card {
     background: #f9f9f9;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .customer-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .customer-info h4 {
-    color: #003d5c;
+    color: #000000;
     margin-bottom: 0.5rem;
     font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 1px;
 }
 
 .customer-phone {
-    color: #555;
+    color: #4a4a4a;
     margin-bottom: 0.5rem;
     font-size: 1rem;
 }
